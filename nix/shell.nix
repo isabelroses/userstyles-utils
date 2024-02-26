@@ -10,10 +10,10 @@ in
   mainPkg.overrideAttrs (oa: {
     nativeBuildInputs =
       [
-        coreutils
-        curl
         yq
+        curl
         shfmt
+        coreutils
       ]
       ++ (oa.nativeBuildInputs or []);
   })
