@@ -2,10 +2,12 @@
 with pkgs;
   writeShellApplication {
     name = "count";
+
     runtimeInputs = [
-      coreutils
-      curl
       yq
+      curl
+      coreutils
     ];
-    text = builtins.readFile ./count.sh;
+
+    text = builtins.readFile ../src/count.sh;
   }

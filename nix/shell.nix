@@ -1,8 +1,9 @@
 {
-  callPackage,
-  coreutils,
-  curl,
   yq,
+  curl,
+  shfmt,
+  coreutils,
+  callPackage,
 }: let
   mainPkg = callPackage ./default.nix {};
 in
@@ -12,6 +13,7 @@ in
         coreutils
         curl
         yq
+        shfmt
       ]
       ++ (oa.nativeBuildInputs or []);
   })
