@@ -17,11 +17,12 @@
     pkgsForEach = nixpkgs.legacyPackages;
   in {
     packages = forEachSystem (system: {
-      default = pkgsForEach.${system}.callPackage ./default.nix {};
+      count = pkgsForEach.${system}.callPackage ./nix/count.nix {};
+      who = pkgsForEach.${system}.callPackage ./nix/who.nix {};
     });
 
     devShells = forEachSystem (system: {
-      default = pkgsForEach.${system}.callPackage ./shell.nix {};
+      default = pkgsForEach.${system}.callPackage ./nix/shell.nix {};
     });
   };
 }
