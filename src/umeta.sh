@@ -59,7 +59,6 @@ Category() {
 }
 
 Help() {
-	# Display Help
 	echo "Syntax: umeta [option]"
 	echo
 	echo "options:"
