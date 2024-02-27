@@ -14,9 +14,7 @@ ChooseUserstyle() {
 }
 
 GetDetails() {
-	USERSTYLE=$($USERSTYLES_YML | yq ".userstyles.\"$(ChooseUserstyle)\"")
-
-	echo "$USERSTYLE"
+	$USERSTYLES_YML | yq ".userstyles.\"$(ChooseUserstyle)\""
 }
 
 GetUserstyle() {
