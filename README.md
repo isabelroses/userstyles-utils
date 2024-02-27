@@ -6,6 +6,8 @@ This is a collection of utilities for userstyles development on [catppuccin/user
 
 <!--toc:start-->
 - [Local utilities](#local-utilities)
+  - [Usage](#usage)
+  - [Dependencies](#dependencies)
 - [External utilities](#external-utilities)
 <!--toc:end-->
 
@@ -14,6 +16,23 @@ This is a collection of utilities for userstyles development on [catppuccin/user
 - [count](./src/count.sh) - A fetch style script to collect data on userstyles as a whole
 - [umeta](./src/umeta.sh) - Quickly userstyles metadata
 - [who](./src/who.sh) - Find out quickly who is the maintainer is
+
+#### Usage
+
+I advise against installing these scripts golbally, and highly recommend you download them on a need-to-use basis.
+
+Or you can run it via nix:
+```sh
+nix run github:isabelroses/userstyles-utils#<script>
+```
+
+#### Dependencies
+
+- [yq](https://github.com/mikefarah/yq)
+- [curl](https://curl.se/)
+- [gum](https://github.com/charmbracelet/gum)
+- [coreutils](https://www.gnu.org/software/coreutils/)
+
 
 ### External utilities
 
