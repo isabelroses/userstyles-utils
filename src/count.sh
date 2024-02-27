@@ -31,7 +31,7 @@ CURRENT_MAINTAINERS=$(
 PAST_MAINTAINERS=$((TOTAL_MAINTAINERS - CURRENT_MAINTAINERS))
 
 echo "Userstyles: $TOTAL_USERSTYLES"
-echo ""
+echo
 echo "Total Maintainers: $TOTAL_MAINTAINERS"
 echo "Current Maintainers: $CURRENT_MAINTAINERS"
 echo "Past Maintainers: $PAST_MAINTAINERS"

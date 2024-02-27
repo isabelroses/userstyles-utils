@@ -30,7 +30,7 @@ TOTAL_USERSTYLES_MAINTAINED=$(
 )
 
 echo "Userstyles Maintained by $CHOOSEN_COLLABORATOR:"
-echo ""
+echo
 echo "$USERSTYLES_MAINTAINED"
-echo ""
+echo
 echo "Total Userstyles Maintained: $TOTAL_USERSTYLES_MAINTAINED"
