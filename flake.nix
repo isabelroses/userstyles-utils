@@ -7,8 +7,6 @@
     systems = [
       "aarch64-darwin"
       "aarch64-linux"
-      "armv6l-linux"
-      "armv7l-linux"
       "x86_64-darwin"
       "x86_64-linux"
     ];
@@ -17,13 +15,11 @@
     pkgsForEach = nixpkgs.legacyPackages;
   in {
     packages = forEachSystem (system: {
-      count = pkgsForEach.${system}.callPackage ./nix/count.nix {};
-      umeta = pkgsForEach.${system}.callPackage ./nix/umeta.nix {};
-      who = pkgsForEach.${system}.callPackage ./nix/who.nix {};
+      default = pkgsForEach.${system}.callPackage ./default.nix {};
     });
 
     devShells = forEachSystem (system: {
-      default = pkgsForEach.${system}.callPackage ./nix/shell.nix {};
+      default = pkgsForEach.${system}.callPackage ./shell.nix {};
     });
   };
 }

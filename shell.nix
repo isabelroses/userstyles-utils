@@ -1,19 +1,15 @@
 {
-  yq,
-  curl,
-  shfmt,
-  coreutils,
   callPackage,
+  gopls,
+  go,
 }: let
   mainPkg = callPackage ./default.nix {};
 in
   mainPkg.overrideAttrs (oa: {
     nativeBuildInputs =
       [
-        yq
-        curl
-        shfmt
-        coreutils
+        gopls
+        go
       ]
       ++ (oa.nativeBuildInputs or []);
   })
