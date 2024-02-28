@@ -11,15 +11,15 @@ type Collaborator struct {
 }
 
 type Userstyle struct {
-	Name     string `yaml:"name"`
-	Category string `yaml:"category"`
-	Icon     string `yaml:"icon"`
-	Color    string `yaml:"color"`
-	Readme   Readme `yaml:"readme"`
+	Name     interface{} `yaml:"name"`
+	Category []string    `yaml:"category"`
+	Icon     string      `yaml:"icon"`
+	Color    string      `yaml:"color"`
+	Readme   Readme      `yaml:"readme"`
 }
 
 type Readme struct {
-	AppLink            string         `yaml:"app-link"`
+	AppLink            []string       `yaml:"app-link"`
 	Usage              string         `yaml:"usage"`
 	Faq                []Faq          `yaml:"faq"`
 	CurrentMaintainers []Collaborator `yaml:"current-maintainers"`

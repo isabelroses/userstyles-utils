@@ -1,23 +1,23 @@
 package cmd
 
 import (
+	"strings"
+
 	"github.com/charmbracelet/bubbles/key"
-	"github.com/charmbracelet/bubbles/list"
-	"github.com/charmbracelet/bubbles/table"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
 type Model struct {
-	list        list.Model
-	table       table.Model
-	keys        *ListKeyMap
-	CurrentView string
+	Tabs       []string
+	TabContent []string
+	activeTab  int
 }
 
-type ListKeyMap struct {
+type KeyMap struct {
 	toggleHelpMenu key.Binding
 	chooseItem     key.Binding
+	quit           key.Binding
 }
 
 var (
@@ -25,23 +25,12 @@ var (
 	bg     = lipgloss.AdaptiveColor{Light: "#eff1f5", Dark: "#1e1e2e"}
 	accent = lipgloss.AdaptiveColor{Light: "#209fb5", Dark: "#74c7ec"}
 
-	style = lipgloss.NewStyle().
-		Margin(1, 2).
-		Foreground(fg)
-)
+	inactiveTabStyle = lipgloss.NewStyle().Padding(0, 1)
+	activeTabStyle   = inactiveTabStyle.Copy().Background(accent).Foreground(bg)
 
-func NewListKeyMap() *ListKeyMap {
-	return &ListKeyMap{
-		toggleHelpMenu: key.NewBinding(
-			key.WithKeys("H"),
-			key.WithHelp("H", "toggle help"),
-		),
-		chooseItem: key.NewBinding(
-			key.WithKeys("enter"),
-			key.WithHelp("enter", "choose item"),
-		),
-	}
-}
+	docStyle    = lipgloss.NewStyle().Padding(1, 2)
+	windowStyle = lipgloss.NewStyle().Margin(1, 0)
+)
 
 func (m Model) Init() tea.Cmd {
 	return nil
@@ -49,45 +38,57 @@ func (m Model) Init() tea.Cmd {
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-
-	case tea.WindowSizeMsg:
-		h, v := style.GetFrameSize()
-		m.list.SetSize(msg.Width-h, msg.Height-v)
-
 	case tea.KeyMsg:
-		// Don't match any of the keys below if we're actively filtering.
-		if m.list.FilterState() == list.Filtering {
-			break
-		}
+		switch keypress := msg.String(); keypress {
+		case "ctrl+c", "q", "esc":
+			return m, tea.Quit
 
-		switch {
-		case key.Matches(msg, m.keys.toggleHelpMenu):
-			m.list.SetShowHelp(!m.list.ShowHelp())
+		case "right", "l", "n", "tab":
+			m.activeTab = min(m.activeTab+1, len(m.Tabs)-1)
 			return m, nil
 
-		case key.Matches(msg, m.keys.chooseItem):
-			selected := m.list.SelectedItem().(Item)
-
-			if m.CurrentView == "Collaborators" {
-				m.CurrentView = selected.Title()
-				m.table = GetCollaboratorView(selected.Description())
-				return m, nil
-			} else {
-				return m, nil
-			}
+		case "left", "h", "p", "shift+tab":
+			m.activeTab = max(m.activeTab-1, 0)
+			return m, nil
 		}
 	}
 
-	var cmd tea.Cmd
-	m.list, cmd = m.list.Update(msg)
-	return m, cmd
+	return m, nil
 }
 
 func (m Model) View() string {
-	if m.CurrentView == "Collaborators" {
-		return style.Render(m.list.View())
-	} else {
-		tableStyle := lipgloss.NewStyle().Inherit(style).BorderStyle(lipgloss.NormalBorder()).BorderForeground(fg)
-		return tableStyle.Render(m.table.View())
+	doc := strings.Builder{}
+
+	var renderedTabs []string
+
+	for i, t := range m.Tabs {
+		var style lipgloss.Style
+		isActive := i == m.activeTab
+		if isActive {
+			style = activeTabStyle.Copy()
+		} else {
+			style = inactiveTabStyle.Copy()
+		}
+		renderedTabs = append(renderedTabs, style.Render(t))
 	}
+
+	row := lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs...)
+	doc.WriteString(row)
+	doc.WriteString("\n")
+	doc.WriteString(windowStyle.Render(m.TabContent[m.activeTab]))
+	return docStyle.Render(doc.String())
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }

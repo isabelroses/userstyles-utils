@@ -4,6 +4,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -25,4 +26,16 @@ func GetSchema() UserstylesRoot {
 	yaml.Unmarshal([]byte(userstylesYml), &data)
 
 	return data
+}
+
+func InferCollaboratorName(collaborator Collaborator) string {
+	var inferedName string
+
+	if collaborator.Name == "" {
+		inferedName = strings.Replace(collaborator.Url, "https://github.com/", "", -1)
+	} else {
+		inferedName = collaborator.Name
+	}
+
+	return inferedName
 }
