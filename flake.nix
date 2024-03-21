@@ -18,6 +18,7 @@
   in {
     packages = forEachSystem (system: {
       count = pkgsForEach.${system}.callPackage ./nix/count.nix {};
+      missing = pkgsForEach.${system}.callPackage ./nix/missing.nix {};
       umeta = pkgsForEach.${system}.callPackage ./nix/umeta.nix {};
       who = pkgsForEach.${system}.callPackage ./nix/who.nix {};
     });
