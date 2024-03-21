@@ -6,24 +6,24 @@ fi
 
 USERSTYLES_YML="cat /tmp/userstyles.yml"
 
-ChooseUserstyle() {
+choose_userstyle() {
 	$USERSTYLES_YML |
 		yq '.userstyles | keys[]' |
 		tr -d \" |
 		gum choose
 }
 
-GetDetails() {
-	$USERSTYLES_YML | yq ".userstyles.\"$(ChooseUserstyle)\""
+get_details() {
+	$USERSTYLES_YML | yq ".userstyles.\"$(choose_userstyle)\""
 }
 
-GetUserstyle() {
-	USERSTYLE=$($USERSTYLES_YML | yq ".userstyles.\"$(ChooseUserstyle)\"")
+get_userstyle() {
+	USERSTYLE=$($USERSTYLES_YML | yq ".userstyles.\"$(choose_userstyle)\"")
 
 	echo "$USERSTYLE" | yq '{name, category, "app-link": .readme."app-link", "current-maintainers": .readme."current-maintainers"}'
 }
 
-Unmaintained() {
+unmaintained() {
 	UNMAINTAINED=$(
 		$USERSTYLES_YML |
 			yq '.userstyles.[] | select(.readme."current-maintainers" == []) | .name' |
@@ -35,7 +35,7 @@ Unmaintained() {
 	echo "Total Unmaintained: $(echo "$UNMAINTAINED" | wc -l)"
 }
 
-Category() {
+category() {
 	CHOOSE_CATEGORY=$(
 		$USERSTYLES_YML |
 			yq '.userstyles.[].category' |
@@ -56,7 +56,7 @@ Category() {
 	echo "Total Userstyles in $CHOOSE_CATEGORY: $(echo "$CATEGORY" | wc -l)"
 }
 
-Help() {
+help() {
 	echo "Syntax: umeta [option]"
 	echo
 	echo "options:"
@@ -68,18 +68,18 @@ Help() {
 }
 
 if [ "$#" -ne 1 ]; then
-	Help
+	help
 	exit 1
 fi
 
 if [ "$1" = "h" ]; then
-	Help
+	help
 elif [ "$1" = "a" ]; then
-	GetDetails
+	get_details
 elif [ "$1" = "g" ]; then
-	GetUserstyle
+	get_userstyle
 elif [ "$1" = "u" ]; then
-	Unmaintained
+	unmaintained
 elif [ "$1" = "c" ]; then
-	Category
+	category
 fi
