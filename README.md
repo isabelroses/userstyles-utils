@@ -14,6 +14,7 @@ This is a collection of utilities for userstyles development on [catppuccin/user
 ### Local utilities
 
 - [count](./src/count.sh) - A fetch style script to collect data on userstyles as a whole
+- [missing](./src/missing.sh) - Find missing elements in userstyles metadata
 - [umeta](./src/umeta.sh) - Quickly userstyles metadata
 - [who](./src/who.sh) - Find out quickly who is the maintainer is
 
