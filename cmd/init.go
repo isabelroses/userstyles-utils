@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/charmbracelet/bubbles/list"
+	"github.com/charmbracelet/bubbles/table"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -20,11 +21,11 @@ func Init() {
 	l := list.New(items, list.NewDefaultDelegate(), 0, 0)
 	l.SetShowTitle(false)
 	l.SetShowHelp(false)
+	l.SetSize(docStyle.GetWidth(), docStyle.GetHeight())
 
 	// setup our view
 	tabs := []string{"Collaborators", "Userstyles"}
-	tabContent := []string{l.View(), "test"}
-	m := Model{Tabs: tabs, TabContent: tabContent}
+	m := MainModel{Tabs: tabs, collaboratorTab: l, userstylesTab: table.New(), activeTab: 0}
 
 	p := tea.NewProgram(m, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {

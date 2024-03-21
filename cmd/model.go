@@ -4,14 +4,21 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/bubbles/key"
+	"github.com/charmbracelet/bubbles/list"
+	"github.com/charmbracelet/bubbles/table"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
 
-type Model struct {
-	Tabs       []string
-	TabContent []string
-	activeTab  int
+// sessionState is used to track which model is focused
+type sessionState uint
+
+type MainModel struct {
+	state           sessionState
+	Tabs            []string
+	collaboratorTab list.Model
+	userstylesTab   table.Model
+	activeTab       int
 }
 
 type KeyMap struct {
@@ -32,11 +39,11 @@ var (
 	windowStyle = lipgloss.NewStyle().Margin(1, 0)
 )
 
-func (m Model) Init() tea.Cmd {
+func (m MainModel) Init() tea.Cmd {
 	return nil
 }
 
-func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch keypress := msg.String(); keypress {
@@ -56,7 +63,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m Model) View() string {
+func (m MainModel) View() string {
 	doc := strings.Builder{}
 
 	var renderedTabs []string
@@ -75,7 +82,11 @@ func (m Model) View() string {
 	row := lipgloss.JoinHorizontal(lipgloss.Top, renderedTabs...)
 	doc.WriteString(row)
 	doc.WriteString("\n")
-	doc.WriteString(windowStyle.Render(m.TabContent[m.activeTab]))
+	if m.activeTab == 0 {
+		doc.WriteString(m.collaboratorTab.View())
+	} else {
+		doc.WriteString(m.userstylesTab.View())
+	}
 	return docStyle.Render(doc.String())
 }
 
