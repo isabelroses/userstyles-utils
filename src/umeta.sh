@@ -38,7 +38,7 @@ unmaintained() {
 category() {
 	CHOOSE_CATEGORY=$(
 		$USERSTYLES_YML |
-			yq '.userstyles.[].category' |
+			yq '.userstyles.[].categories[]' |
 			tr -d \" |
 			sort |
 			uniq |
@@ -47,7 +47,7 @@ category() {
 
 	CATEGORY=$(
 		$USERSTYLES_YML |
-			yq '.userstyles.[] | select(.category == "'"$CHOOSE_CATEGORY"'") | .name' |
+			yq ".userstyles.[] | select(.categories[] | contains (\"$CHOOSE_CATEGORY\")) | .name" |
 			tr -d \"
 	)
 
