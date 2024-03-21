@@ -32,6 +32,8 @@ fi
 
 if [ "$1" = "-h" ]; then
 	help
+elif [ "$1" = "-c" ]; then
+	get_missing "$2" "$3" | wc -l
 else
 	get_missing "$1" "$2"
 fi
