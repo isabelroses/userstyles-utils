@@ -15,7 +15,7 @@ CHOOSEN_COLLABORATOR=$(
 		gum choose
 )
 
-GET_USERSTYLES_MAINTAINED='.userstyles.[] | select(.readme."current-maintainers".[] | if (.name) then .name == "'"$CHOOSEN_COLLABORATOR"'" else .url == "https://github.com/'"$CHOOSEN_COLLABORATOR"'" end) | if (.name | type=="array") then .name.[0] else .name end'
+GET_USERSTYLES_MAINTAINED=".userstyles.[] | select(.readme.\"current-maintainers\".[] | if (.name) then .name == \"$CHOOSEN_COLLABORATOR\" else .url == \"https://github.com/$CHOOSEN_COLLABORATOR\" end) | if (.name | type==\"array\") then .name.[0] else .name end"
 
 USERSTYLES_MAINTAINED=$(
 	$USERSTYLES_YML |
