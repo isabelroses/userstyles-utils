@@ -1,6 +1,11 @@
-## Userstyles utils
+<p align="center">
+    <img alt="Sylus Logo" src="assets/stylus.webp" width="250">
+    <h2 align="center">Userstyles Utils</h3>
+</p>
 
-This is a collection of utilities for userstyles development on [catppuccin/userstyles](https://github.com/catppuccin/userstyles).
+<p align="center">
+    This is a collection of utilities for userstyles development on <a href="https://github.com/catppuccin/userstyles">catppuccin/userstyles</a>.
+</p>
 
 ### Table of contents
 
