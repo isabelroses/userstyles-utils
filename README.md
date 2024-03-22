@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-    This is a collection of utilities for userstyles development on <a href="https://github.com/catppuccin/userstyles">catppuccin/userstyles</a>.
+    A small collection of utilities for development on <a href="https://github.com/catppuccin/userstyles">catppuccin/userstyles</a>.
 </p>
 
 ### Table of contents
