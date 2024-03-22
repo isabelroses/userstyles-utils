@@ -1,5 +1,5 @@
 <p align="center">
-    <img alt="Sylus Logo" src="assets/stylus.webp" width="250">
+    <img alt="Sylus Logo" src="assets/stylus.webp" width="100">
     <h2 align="center">Userstyles Utils</h3>
 </p>
 
