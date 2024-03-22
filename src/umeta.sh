@@ -20,7 +20,7 @@ get_details() {
 get_userstyle() {
 	USERSTYLE=$($USERSTYLES_YML | yq ".userstyles.\"$(choose_userstyle)\"")
 
-	echo "$USERSTYLE" | yq '{name, category, "app-link": .readme."app-link", "current-maintainers": .readme."current-maintainers"}'
+	echo "$USERSTYLE" | yq '{name, categories, "app-link": .readme."app-link", "current-maintainers": .readme."current-maintainers"}'
 }
 
 unmaintained() {
